@@ -49,3 +49,5 @@ Run each component in a separate terminal (subscriber and simulator need the bro
 - `load_historical.py` — Bulk backfill for development
 - `dashboard.py` — Streamlit + Plotly charts
 - `utils.py` — DB helpers and meter simulation utilities
+- `sql/` — TimescaleDB setup and analysis scripts
+- `report/` — Project documentation
