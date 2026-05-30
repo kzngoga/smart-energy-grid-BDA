@@ -4,7 +4,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from utils import get_db_engine
 
-# ─── Page config ───
+# Page config
 st.set_page_config(page_title="Smart Energy Grid", layout="wide")
 st.title("Smart Energy Grid - Analytics & Dashboard")
 
@@ -25,9 +25,7 @@ def style_datetime_axis(fig, tickformat, hoverformat=None):
     return fig
 
 
-# ─────────────────────────────────────────
 # Section 1: Real-time meter readings (last hour)
-# ─────────────────────────────────────────
 st.header("1. Real-Time Meter Readings (Last Hour)")
 
 df_realtime = run_query("""
@@ -47,10 +45,7 @@ fig1 = px.line(df_realtime, x="bucket", y="avg_power",
 style_datetime_axis(fig1, tickformat="%H:%M", hoverformat="%Y-%m-%d %H:%M")
 st.plotly_chart(fig1, width="stretch")
 
-
-# ─────────────────────────────────────────
 # Section 2: Daily consumption (today vs yesterday)
-# ─────────────────────────────────────────
 st.header("2. Daily Consumption Patterns")
 
 df_daily = run_query("""
@@ -84,9 +79,7 @@ fig2.update_xaxes(type="category")
 st.plotly_chart(fig2, width="stretch")
 
 
-# ─────────────────────────────────────────
 # Section 3: Weekly trends
-# ─────────────────────────────────────────
 st.header("3. Weekly Trends")
 
 df_weekly = run_query("""
@@ -107,10 +100,7 @@ fig3 = px.bar(df_weekly, x="day", y="total_energy",
 style_datetime_axis(fig3, tickformat="%b %d", hoverformat="%Y-%m-%d")
 st.plotly_chart(fig3, width="stretch")
 
-
-# ─────────────────────────────────────────
 # Section 4: Monthly energy usage by region
-# ─────────────────────────────────────────
 st.header("4. Monthly Energy Usage by Region")
 st.caption("Meters grouped by first digit of meter ID (e.g. 1xxxxxxxx = Region 1)")
 
@@ -134,13 +124,10 @@ fig4 = px.bar(df_region, x="month", y="total_energy", color="region",
 style_datetime_axis(fig4, tickformat="%b %Y", hoverformat="%b %Y")
 st.plotly_chart(fig4, width="stretch")
 
-
-# ─────────────────────────────────────────
 # Section 5: Performance metrics panel
-# ─────────────────────────────────────────
 st.header("5. Performance Metrics")
 
-# ─── 5a: Raw vs aggregated query time ───
+# Raw vs aggregated query time
 st.subheader("Query Execution Time: Raw vs Aggregated View")
 
 df_perf = pd.DataFrame({
@@ -152,7 +139,7 @@ fig5 = px.bar(df_perf, x="Query Type", y="Time (ms)", color="Query Type",
               labels={"Time (ms)": "Execution Time (ms)"})
 st.plotly_chart(fig5, width="stretch")
 
-# ─── 5b: Storage before vs after compression ───
+# Storage before vs after compression
 st.subheader("Storage Efficiency: Before vs After Compression")
 
 df_storage = pd.DataFrame({
@@ -168,7 +155,7 @@ fig6.update_layout(barmode="group", title="Disk Usage Before vs After Compressio
                    yaxis_title="Size (MB)")
 st.plotly_chart(fig6, width="stretch")
 
-# ─── 5c: Chunk strategy performance comparison ───
+# Chunk strategy performance comparison
 st.subheader("Query Performance by Chunk Strategy")
 
 df_chunk = pd.DataFrame({
